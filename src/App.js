@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import hookActions from './actions/hookActions';
+import Input from './Input';
 
 /**
  * reducer to update state
@@ -31,7 +32,9 @@ function App() {
     []
   ); 
   return (
-    <div  data-test="component-app"/>
+    <div  data-test="component-app">
+      <Input secretWord={state.secretWord} />
+    </div>  
   );
 }
 
