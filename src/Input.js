@@ -28,6 +28,11 @@ function Input({secretWord}){
                     className="btn btn-primary mb-2"
                     onClick={(evt)=>{
                         evt.preventDefault();
+                        
+                        if(currentGuess === secretWord){
+                            setSuccess(true);
+                        }
+                        //clear input box
                         setCurrentGuess("");
                     }}
                 >
