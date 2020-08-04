@@ -3,18 +3,23 @@ import {mount} from 'enzyme';
 import { findByTestAttr, checkProps } from '../test/testUtils';
 import Input from './Input';
 import LanguageContext from './contexts/LanguageContext';
+import successContext from './contexts/successContext';
 
 /**
  * create ReactWrapper for Input component for testing
  * @param {object} testValues - Context and props values for this specific test
  * @returns {ReactWrapper} - wrapper for Input component and providers
  */
-const setup = ({ language, secretWord }) => {
+const setup = ({ language, secretWord, success}) => {
     language = language || "en";
     secretWord = secretWord || "party"
+    success = success || false;
+
     return mount(
         <LanguageContext.Provider value={language} >
-            <Input secretWord={secretWord}/>
+            <successContext.SuccessProvider value={[success, jest.fn()]}>
+                <Input secretWord={secretWord}/>
+            </successContext.SuccessProvider>
         </LanguageContext.Provider>  
     );
 };
@@ -65,4 +70,9 @@ describe('languagePicker', () => {
         const submitButton = findByTestAttr(wrapper, 'submit-button');
         expect(submitButton.text()).toBe('🚀');
     });
+});
+
+test('input component does not show when success is true', () => {
+    const wrapper = setup({ secretWord: "party", success: true });
+    expect(wrapper.isEmptyRender()).toBe(true);
 });
