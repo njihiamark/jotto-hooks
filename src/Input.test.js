@@ -4,6 +4,7 @@ import { findByTestAttr, checkProps } from '../test/testUtils';
 import Input from './Input';
 import LanguageContext from './contexts/LanguageContext';
 import successContext from './contexts/successContext';
+import guessedWordsContext from './contexts/guessedWordsContext';
 
 /**
  * create ReactWrapper for Input component for testing
@@ -18,7 +19,9 @@ const setup = ({ language, secretWord, success}) => {
     return mount(
         <LanguageContext.Provider value={language} >
             <successContext.SuccessProvider value={[success, jest.fn()]}>
-                <Input secretWord={secretWord}/>
+                <guessedWordsContext.GuessedWordsProvider>
+                    <Input secretWord={secretWord}/>
+                </guessedWordsContext.GuessedWordsProvider>
             </successContext.SuccessProvider>
         </LanguageContext.Provider>  
     );
